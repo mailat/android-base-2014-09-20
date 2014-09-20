@@ -9,8 +9,8 @@ public class RebootCompletedReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d("WeatherBrasov", "We are in onReceive");
-		context.startService(new Intent(context, RefreshService.class));
+		Log.d("WeatherBrasov", "We are in RebootCompletedReceiver onReceive");
+		//context.startService(new Intent(context, RefreshService.class));
 	}
 
 }

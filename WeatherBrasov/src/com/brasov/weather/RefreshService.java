@@ -20,7 +20,8 @@ public class RefreshService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		try {
 			// transporter for our in->out call
-			String urlWeather = "http://api.openweathermap.org/data/2.5/weather?q=" + "Brasov" + ",en&units=metric";
+			//TODO pune orasul din preferinte
+			String urlWeather = "http://api.openweathermap.org/data/2.5/weather?q=" + "Brasov" + ",ro&units=metric";
 			
 			HttpClient client = new DefaultHttpClient();
 			HttpGet httpget = new HttpGet(urlWeather);
