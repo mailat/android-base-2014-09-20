@@ -23,16 +23,17 @@ public class RefreshService extends IntentService {
 			//TODO pune orasul din preferinte
 			String urlWeather = "http://api.openweathermap.org/data/2.5/weather?q=" + "Brasov" + ",ro&units=metric";
 			
+			//get pe url
 			HttpClient client = new DefaultHttpClient();
 			HttpGet httpget = new HttpGet(urlWeather);
 			String response = client.execute(httpget, new BasicResponseHandler());
 
+			//parsare JSON
 			JSONObject jObj = new JSONObject(response);
 			JSONObject jsonObj = jObj.getJSONObject("main");
+			String weatherString = new Float(jsonObj.getString("temp")).toString();
 			
-			String weatherString = "";
-			weatherString = new Float(jsonObj.getString("temp")).toString();
-			Log.d("WeatherBrasov", "The new weather via IntentService is: "+weatherString);
+			Log.d("WeatherBrasov", "The new weather via IntentService is: " + weatherString);
 			
 		} catch (Throwable e) {
 		}

@@ -38,7 +38,7 @@ public class WeatherActivity extends Activity {
 		String city = intent.getStringExtra("oras");
 		city = city.replaceAll(" ", "%20");
 		request = "http://api.openweathermap.org/data/2.5/weather?q=" + city
-				+ ",en&units=metric";
+				+ ",ro&units=metric";
 
 		listText = (TextView) findViewById(R.id.listText);
 		minTemp = (TextView) findViewById(R.id.minTemp);
