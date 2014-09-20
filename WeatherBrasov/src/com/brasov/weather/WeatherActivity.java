@@ -1,23 +1,16 @@
 package com.brasov.weather;
 
-import java.io.InputStream;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class WeatherActivity extends Activity {
@@ -26,7 +19,6 @@ public class WeatherActivity extends Activity {
 	TextView listText;
 	TextView minTemp;
 	TextView maxtemp;
-	ImageView imageIcon;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +35,6 @@ public class WeatherActivity extends Activity {
 		listText = (TextView) findViewById(R.id.listText);
 		minTemp = (TextView) findViewById(R.id.minTemp);
 		maxtemp = (TextView) findViewById(R.id.maxTemp);
-		imageIcon = (ImageView) findViewById(R.id.imageIcon);
-		// set the proxy in case you need it
-		// System.setProperty("http.proxyHost", "proxy here");
-		// System.setProperty("http.proxyPort", "port here");
 
 		// get the data in an AsyncTask
 		new WeatherUpdater().execute();
@@ -86,15 +74,7 @@ public class WeatherActivity extends Activity {
 				maxtemp.setText(new Float(jsonObj.getString("temp_max"))
 						.intValue() + "\u00B0");
 
-				// use a Thread to load this image
-				JSONArray jArray = jObj.getJSONArray("weather");
-				JSONObject jObject = jArray.getJSONObject(0);
-				String url = "http://openweathermap.org/img/w/"
-						+ jObject.getString("icon") + ".png";
-				Log.d("Weather", "http://openweathermap.org/img/w/" + url + ".png");
-				new DownloadImageTask(imageIcon).execute(url);
-
-			} catch (JSONException e) {
+			} catch (Throwable e) {
 				e.printStackTrace();
 			}
 		}
@@ -106,40 +86,4 @@ public class WeatherActivity extends Activity {
 		}
 
 	}
-
-	public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-		ImageView bmImage;
-
-		public DownloadImageTask(ImageView bmImage) {
-			this.bmImage = bmImage;
-
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
-
-		protected Bitmap doInBackground(String... urls) {
-			String urldisplay = urls[0];
-			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new java.net.URL(urldisplay).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-			}
-			return mIcon11;
-		}
-
-		protected void onPostExecute(Bitmap result) {
-			bmImage.setImageBitmap(result);
-			bmImage.setVisibility(View.VISIBLE);
-			super.onPostExecute(result);
-
-		}
-
-	}
-
 }
