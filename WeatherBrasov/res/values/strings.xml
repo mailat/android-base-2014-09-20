@@ -3,5 +3,7 @@
 
     <string name="app_name">WeatherBrasov</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_weather">WeatherActivity</string>
+    <string name="show_weather">Show the weather</string>
 
 </resources>
